@@ -1418,10 +1418,10 @@ p {
     z-index: -1;
   }
   
-  .u-bg-gradient--primary {
-    /* background-image: -webkit-linear-gradient(270deg, #153bb5 -10%, #0099ff 100%);
-    background-image: linear-gradient(180deg, #153bb5 -10%, #0099ff 100%); */
-  }
+   /* .u-bg-gradient--primary {
+     background-image: -webkit-linear-gradient(270deg, #153bb5 -10%, #0099ff 100%);
+    background-image: linear-gradient(180deg, #153bb5 -10%, #0099ff 100%); 
+  }  */
   
   .u-bg--primary {
     background: #0099ff;
@@ -2105,13 +2105,13 @@ p {
     background: #f5f7fa;
   }
   
-  .bg-pattern-dots--light {
+  /* .bg-pattern-dots--light {
     background-image: 
-  }
+  } */
   
-  .bg-pattern-dots--dark {
+  /* .bg-pattern-dots--dark {
     background-image: 
-  }
+  } */
   
   .bg-center-cover {
     -webkit-background-size: cover !important;
