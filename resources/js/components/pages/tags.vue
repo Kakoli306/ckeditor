@@ -26,7 +26,7 @@
 								<td>{{tag.created_at}}</td>
 								<td>
 									
-                                    <Button type="info" size="small">Edit</Button>
+                                    <Button type="info" size="small" @click="showEditModal(tag)">Edit</Button>
 									<Button type="error" size="small" >Delete</Button>
 									
 								</td>
@@ -43,11 +43,31 @@
                     :mask-closable="false"
                     :closable="false"
 				>
+
+                
                 <Input v-model="data.tagName" placeholder="Add tag name"  />
 
                 <div slot="footer">
                 <Button type="default" @click="addModal">Close</Button>
                 <Button type="primary" @click="addTag" :disabled="isAdding" :loading="isAdding">{{isAdding ? 'Adding..' : 'Add tag'}}</Button>
+
+                </div>
+                  </Modal>
+
+                  <!--~~~~~~~ Tag Editing Modal ~~~~~~~~~-->
+                  <Modal
+                  v-model="editModal"
+					title="Edit tag"
+                    :mask-closable="false"
+                    :closable="false"
+				>
+
+                
+                <Input v-model="editData.tagName" placeholder="Edit tag name"  />
+
+                <div slot="footer">
+                <Button type="default" @click="editModal">Close</Button>
+                <Button type="primary" @click="editTag" :disabled="isAdding" :loading="isAdding">{{isAdding ? 'Adding..' : 'Add tag'}}</Button>
 
                 </div>
                   </Modal>
@@ -66,10 +86,16 @@ export default {
                 tagName : ''
             },
             addModal: false,
+            editModal: false,
             isAdding : false,
             tags: [],
+            editData : {
+                tagName: ''
+            }
         }
     },
+
+    
     methods : {
         async addTag(){
             if(this.data.tagName.trim()=='') return this.e('Tag name is required')
@@ -80,10 +106,40 @@ export default {
                 this.addModal = false
                 this.data.tagName = ''
             }else{
-                this.swr()
+                if(res.status === 422){
+                    if(res.data.errors.tagName)
+                    this.e(res.data.errors.tagName[0])
+                }
+                else {
+                    this.swr()
+                }
+                
             }
-        }
+        },
+
+        async editTag(){
+            if(this.editdata.tagName.trim()=='') return this.e('Tag name is required')
+            const res = await this.callApi('post', 'app/edit_tag', this.data)
+            if(res.status === 200){
+                this.s('Tag has been edited successfully')
+                this.editModal = false
+            }else{
+                if(res.status === 422){
+                    if(res.data.errors.tagName)
+                    this.e(res.data.errors.tagName[0])
+                }
+                else {
+                    this.swr()
+                }
+                
+            }
+        },
+        showEditModal(tag){
+        this.editData = tag
+        this.editModal = true
+    }
     },
+    
     async created(){
         const res = await this.callApi('get', '/app/get_tags');
         console.log(res)
