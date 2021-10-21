@@ -16,6 +16,8 @@ use App\Http\Controllers\TestController;
 
 Route::post('app/create_tag', 'App\Http\Controllers\AdminController@addTag');
 Route::get('app/get_tags', 'App\Http\Controllers\AdminController@getTag');
+Route::post('app/edit_tag', 'App\Http\Controllers\AdminController@editTag');
+Route::post('app/delete_tag', 'App\Http\Controllers\AdminController@deleteTag');
 
 Route::get('/', function () {
     return view('welcome');

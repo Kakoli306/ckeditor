@@ -26,9 +26,9 @@
 								<td>{{tag.created_at}}</td>
 								<td>
 									
-                                    <Button type="info" size="small" @click="showEditModal(tag)">Edit</Button>
-									<Button type="error" size="small" >Delete</Button>
-									
+                                    <Button type="info" size="small" @click="showEditModal(tag, i)" >Edit</Button>
+	<Button type="error" size="small" @click="deleteTag(tag, i)"  :loading="tag.isDeleting">Delete</Button>
+
 								</td>
 							</tr>
 								
@@ -48,7 +48,7 @@
                 <Input v-model="data.tagName" placeholder="Add tag name"  />
 
                 <div slot="footer">
-                <Button type="default" @click="addModal">Close</Button>
+                <Button type="default" @click="addModal = false">Close</Button>
                 <Button type="primary" @click="addTag" :disabled="isAdding" :loading="isAdding">{{isAdding ? 'Adding..' : 'Add tag'}}</Button>
 
                 </div>
@@ -66,8 +66,8 @@
                 <Input v-model="editData.tagName" placeholder="Edit tag name"  />
 
                 <div slot="footer">
-                <Button type="default" @click="editModal">Close</Button>
-                <Button type="primary" @click="editTag" :disabled="isAdding" :loading="isAdding">{{isAdding ? 'Adding..' : 'Add tag'}}</Button>
+                <Button type="default" @click="editModal = false">Close</Button>
+                <Button type="primary" @click="editTag" :disabled="isAdding" :loading="isAdding">{{isAdding ? 'Editing..' : 'Edit tag'}}</Button>
 
                 </div>
                   </Modal>
@@ -91,7 +91,8 @@ export default {
             tags: [],
             editData : {
                 tagName: ''
-            }
+            },
+            index : -1
         }
     },
 
@@ -118,25 +119,42 @@ export default {
         },
 
         async editTag(){
-            if(this.editdata.tagName.trim()=='') return this.e('Tag name is required')
-            const res = await this.callApi('post', 'app/edit_tag', this.data)
-            if(res.status === 200){
-                this.s('Tag has been edited successfully')
-                this.editModal = false
-            }else{
-                if(res.status === 422){
-                    if(res.data.errors.tagName)
-                    this.e(res.data.errors.tagName[0])
-                }
-                else {
-                    this.swr()
-                }
-                
+			if(this.editData.tagName.trim()=='') return this.e('Tag name is required')
+			const res = await this.callApi('post', 'app/edit_tag', this.editData)
+			if(res.status===200){
+				this.tags[this.index].tagName = this.editData.tagName
+				this.s('Tag has been edited successfully!')
+				this.editModal = false
+				
+			}else{
+				if(res.status==422){
+					if(res.data.errors.tagName){
+						this.e(res.data.errors.tagName[0])
+					}
+					
+				}else{
+					this.swr()
+				}
+				
+			}
+		},
+        showEditModal(tag, index){
+            let obj ={
+                id : tag.id,
+                tagName : tag.tagName
             }
-        },
-        showEditModal(tag){
-        this.editData = tag
+        this.editData = obj
         this.editModal = true
+        this.index = index
+    },
+    async deleteTag(tag,i){
+        this.isDeleting = true
+        const res = await this.callApi('post', 'app/delete_tag', this.deleteItem)
+        if(res.status===200){
+            this.s('Tag has been deleted')
+        }else{
+            this.swr()
+        }
     }
     },
     
