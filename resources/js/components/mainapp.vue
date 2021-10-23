@@ -20,6 +20,8 @@
             <ul class="_1side_menu_list_ul">
               <li><router-link to="/"><Icon type="ios-speedometer" /> Overview</router-link></li>
                <li><router-link to="tags"><Icon type="ios-speedometer" /> Tags</router-link></li>
+               <li><router-link to="category"><Icon type="ios-speedometer" /> Categories</router-link></li>
+
             </ul>
           </div>
         </div>

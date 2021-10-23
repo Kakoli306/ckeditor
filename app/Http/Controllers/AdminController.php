@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Tag;
+use App\Models\Category;
+
 class AdminController extends Controller
 {
     public function addTag(Request $request){
@@ -40,4 +42,48 @@ public function deleteTag(Request $request)
     ]);
     return Tag::where('id', $request->id)->delete();
 }
+public function upload(Request $request)
+    {
+        $this->validate($request, [
+            'file' => 'required|mimes:jpeg,jpg,png',
+        ]);
+        $picName = time() . '.' . $request->file->extension();
+        $request->file->move(public_path('uploads'), $picName);
+        return $picName;
+    }
+
+    public function deleteImage(Request $request)
+    {
+        $fileName = $request->imageName;
+        $this->deleteFileFromServer($fileName, false);
+        return 'done';
+    }
+    public function deleteFileFromServer($fileName, $hasFullPath = false)
+    {
+        if (!$hasFullPath) {
+            $filePath = public_path() . '/uploads/' . $fileName;
+        }
+        if (file_exists($filePath)) {
+            @unlink($filePath);
+        }
+        return;
+    }
+
+    public function addCategory(Request $request)
+    {
+        // validate request
+        $this->validate($request, [
+            'categoryName' => 'required',
+            'iconImage' => 'required',
+        ]);
+        return Category::create([
+            'categoryName' => $request->categoryName,
+            'iconImage' => $request->iconImage,
+        ]);
+    }
+
+    public function getCategory()
+    {
+        return Category::orderBy('id', 'desc')->get();
+    }
 }
