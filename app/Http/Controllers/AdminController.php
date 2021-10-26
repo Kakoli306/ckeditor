@@ -78,12 +78,27 @@ public function upload(Request $request)
         ]);
         return Category::create([
             'categoryName' => $request->categoryName,
-            'iconImage' => $request->iconImage,
+            'iconImage' => "uploads/".$request->iconImage,
+            
         ]);
     }
 
     public function getCategory()
     {
         return Category::orderBy('id', 'desc')->get();
+        
+    }
+
+    public function editCategory(Request $request)
+    {
+        // validate request
+        $this->validate($request, [
+            'categoryName' => 'required',
+            'iconImage' => 'required',
+        ]);
+        return Category::where('id', $request->id)->update([
+            'categoryName' => $request->categoryName,
+            'iconImage' => $request->iconImage,
+        ]);
     }
 }

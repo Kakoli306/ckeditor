@@ -111,7 +111,8 @@ export default {
             showDeleteModal : false,
             isDeleting : false,
             deleteItem: {},
-            deletingIndex: -1
+            deletingIndex: -1,
+            websiteSettings: []
         }
     },
 

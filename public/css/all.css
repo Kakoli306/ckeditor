@@ -146,7 +146,7 @@ p {
   /*
   SELF HOSTED FONTS
   */
-  @font-face {
+  /* @font-face {
     font-family: 'HK Grotesk';
     src: url("/static/fonts/hk-grotesk/HKGrotesk-Light.woff2") format("woff2"), url("../fonts/hk-grotesk/HKGrotesk-Light.woff") format("woff");
     font-weight: 300;
@@ -169,7 +169,7 @@ p {
     src: url("/static/fonts/hk-grotesk/HKGrotesk-Medium.woff2") format("woff2"), url("../fonts/hk-grotesk/HKGrotesk-Medium.woff") format("woff");
     font-weight: 500;
     font-style: normal;
-  }
+  } */
   /*
    GLOBAL SHARED STYLES
   */
