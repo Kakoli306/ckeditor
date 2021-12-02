@@ -4,10 +4,16 @@ Vue.use(Router)
 import home from './components/pages/home'
 import tags from './admin/pages/tags'
 import category from './admin/pages/category'
+import usecom from './vuex/usecom'
 
 // import newRoutePage from './components/pages/newRoutePage'
 
 const routes = [
+    {
+        path: '/testvuex',
+        component: usecom,
+       
+    },
     {
         path: '/',
         component: home,

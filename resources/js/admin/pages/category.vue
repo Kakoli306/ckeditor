@@ -127,27 +127,15 @@
 
                 </div>
                   </Modal>
-                  <!-- delete alert modal -->
-				 <Modal v-model="showDeleteModal" width="360">
-					<p slot="header" style="color:#f60;text-align:center">
-						<Icon type="ios-information-circle"></Icon>
-						<span>Delete confirmation</span>
-					</p>
-					<div style="text-align:center">
-						<p>Are you sure you want to delete Category?.</p>
-						
-					</div>
-					<div slot="footer">
-						<Button type="error" size="large" long :loading="isDeleting" :disabled="isDeleting" @click="deleteTag" >Delete</Button>
-					</div>
-				</Modal> 
+                  <deleteModal></deleteModal>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
-import { constants } from 'buffer'
+import deleteModal from "../components/deleteModal.vue";
+import { mapGetters } from "vuex";
 export default {
     
     data(){
@@ -346,6 +334,12 @@ export default {
             this.swr
         }
         
-    }
+    },
+    components: {
+    deleteModal
+  },
+  computed: {
+    ...mapGetters(["getDeleteModalObj"])
+  },
 }
 </script>
