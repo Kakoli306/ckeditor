@@ -5,14 +5,19 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        counter: 3000,
-        showDeleteModal: false,
-        deleteUrl : '',
-        data : null,
-        deletingIndex: -1,
-        isDeleted: false,
-    },
+        deleteModalObj : {
+            showDeleteModal: false,
+            deleteUrl : '',
+            data : null,
+            deletingIndex: -1,
+            isDeleted : false,
 
+        },
+
+        user: false,
+        userPermission: null
+    },
+    
     getters: {
         getCounter(state){
             return state.counter
@@ -48,5 +53,14 @@ export default new Vuex.Store({
         },
 
     },
+
+
+
+    actions :{
+        changeCounterAction({commit}, data){
+            commit('changeTheCounter', data)
+        }
+    }
+
 
 })

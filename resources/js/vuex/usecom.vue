@@ -3,7 +3,7 @@
         <div class="content">
 			<div class="container-fluid">
                     <h1>I will show how all other components react to changes</h1>
-                    <h2>The master component : {{$store.state.counter}}</h2>
+                    <h2>The master component : {{counter}}</h2>
                 <div>
                     <comA></comA>
                 </div>
@@ -13,7 +13,8 @@
                 <div>
                     <comC></comC>
                 </div>
-   <Button type="info" @click="changeCounter">Change the state of the counter</Button>
+
+                <Button type="info" @click="changeCounter">Change the state of the counter</Button>
 			</div>
             
         </div>
@@ -21,12 +22,11 @@
     </div>
 </template>
 
+
 <script>
-import { defineComponent } from '@vue/composition-api'
 import comA from './comA'
 import comB from './comB'
 import comC from './comC'
-
 import {mapGetters, mapActions} from 'vuex'
 export default {
     data(){

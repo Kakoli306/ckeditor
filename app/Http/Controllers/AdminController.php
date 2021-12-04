@@ -89,6 +89,10 @@ public function upload(Request $request)
         
     }
 
+    
+
+    
+
     public function editCategory(Request $request)
     {
         // validate request
@@ -100,5 +104,18 @@ public function upload(Request $request)
             'categoryName' => $request->categoryName,
             'iconImage' => $request->iconImage,
         ]);
+    }
+
+    
+
+    public function deleteCategory(Request $request)
+    {
+        // first delete the original file from the server
+        $this->deleteFileFromServer($request->iconImage);
+        // validate request
+        $this->validate($request, [
+            'id' => 'required',
+        ]);
+        return Category::where('id', $request->id)->delete();
     }
 }
